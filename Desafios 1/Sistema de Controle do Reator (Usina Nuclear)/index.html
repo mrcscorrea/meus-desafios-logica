@@ -98,6 +98,7 @@
     <script>
         // 1. Capturar o botão e o campo de saída (monitor)
         const btn = document.getElementById('btnCheck');
+        const monitor = document.getElementById('resultado-logica');
         // Chamar variável monitor seguindo o padrão da variável btn usando o objeto (resultado-logica) 
 
         // 2. Evento de Clique
@@ -105,6 +106,8 @@
             
             // 3. Capturar os valores dos inputs
             const temp = parseFloat(document.getElementById('tempInput').value);
+            const pres = parseFloat(document.getElementById('presInput').value);
+            const hastes = parseFloat(document.getElementById('hastesInput').value);
             // Chamar variável pres (pressão) seguindo o padrão
             // Chamar variável hastes seguindo o padrão
             
@@ -127,10 +130,28 @@
                 cor = "#ffff00";
             } 
             //Continue a lógica aqui....
+            else if (manual || pres > 100) {
+                msg = "DESLIGAMENTO: INTERRUPÇÃO MANUAL ATIVADA OU PRESSÃO CRÍTICA! DESLIGAR TUDO.";
+                cor = "#ff0000";
+            }
+            else if (temp > 700 && hastes == 0) {
+                msg = "CRÍTICO: NÚCLEO SEM CONTROLE! RISCO DE FUSÃO!";
+                cor = "#ff0000";
+            }
+            
+            else if (temp >= 400 && temp <= 700) {
+                msg = "ALERTA: TEMPERATURA ALTA! ATENÇÃO NA RESFRIAÇÃO.";
+                cor = "#ffff00";
+            }
+            else {
+                msg = "ESTÁVEL: CONDIÇÕES NORMAIS, MANTER MONITORAMENTO."
+                cor = "#00ff00";
+            }
 
             // 4. Exibir os resultados no monitor (DOM)
             monitor.innerText = msg;
             monitor.style.color = cor;
+            monitor.style.borderColor = cor;
             // Chamar borderColor seguir o padrão acima
             
         });

@@ -90,11 +90,13 @@
 
     <script>
         const btn = document.getElementById('btnCalcular');
+        const display = document.getElementById('resultado-logica');
         //Chamar váriavel display seguir padrão de da variavel btn
 
         //Liga o seu código HTML à ação do usuário
         btn.addEventListener('click', () => {
             const angulo = parseFloat(document.getElementById('anguloInput').value);
+            const escudo = parseFloat(document.getElementById('escudoInput').value);
             //Chamar váriavel escudo seguir padrão de da variavel angulo objeto (resultado-logica)
             
             let mensagem = "";
@@ -111,9 +113,32 @@
                 cor = "#f85149";
             } 
             //Segue Continuidade da Lógica....
+            if (angulo < 15) {
+                mensagem = "⚠️ ERRO: Ângulo muito raso. A nave ricocheteou na atmosfera!";
+                cor = "#f85149";
+            } else if (angulo >= 15 && angulo <= 25) {
+                if (escudo > 90) {
+                mensagem = "✅ SUCESSO: Reentrada perfeita e escudo íntegro."
+                cor = "#3fb950";
+                } else if (escudo >= 50 && escudo <= 90) {
+                    mensagem = "⚠️ ATENÇÃO: Reentrada segura, mas o escudo requer manutenção."
+                    cor = "#d29922";
+                }
+                
+                if (escudo < 50) {
+                    mensagem = "🚨 PERIGO: Reentrada instável! Escudo com danos críticos."
+                    cor = "#f85149";
+                }
+            }
+
+            if (angulo > 25) {
+                mensagem = "🔥 CRÍTICO: Ângulo muito inclinado. A nave se desintegrou pelo calor!";
+                cor = "#f85149";
+            }
 
             display.innerText = mensagem;
             display.style.color = cor;
+            display.style.borderColor = cor;
             //Chamar borderColor seguir padrão display.style.color = cor;
         });
     </script>
